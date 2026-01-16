@@ -1,0 +1,212 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="git-pend - Documentation">
+  <section id="overview">
+    <h2>Overview</h2>
+    <p>
+      <strong>git-pend</strong> is a CLI tool to quickly scan subdirectories and find git repositories with pending changes, 
+      unpushed commits, or stashed work.
+    </p>
+    <p>
+      Perfect for developers managing multiple projects who want to ensure nothing is forgotten before ending their 
+      workday or switching tasks.
+    </p>
+  </section>
+
+  <section id="installation">
+    <h2>Installation</h2>
+    
+    <h3>Global Installation (Recommended)</h3>
+    <div class="install-box">
+      <p>Install globally to use the command from anywhere:</p>
+      <pre><code>npm install -g git-pend</code></pre>
+      <p>After installation, run:</p>
+      <pre><code>git-pend</code></pre>
+    </div>
+
+    <h3>Local Installation</h3>
+    <div class="install-box">
+      <p>Install locally in your project:</p>
+      <pre><code>npm install git-pend</code></pre>
+      <p>Then run via npx:</p>
+      <pre><code>npx git-pend</code></pre>
+    </div>
+  </section>
+
+  <section id="usage">
+    <h2>Usage</h2>
+
+    <h3>Basic Usage</h3>
+    <p>Scan the current directory and all subdirectories for git repositories with pending changes:</p>
+    <pre><code>git-pend</code></pre>
+
+    <h3>Scan a Specific Directory</h3>
+    <pre><code>git-pend ~/projects
+git-pend /path/to/your/repos</code></pre>
+
+    <h3>Command Line Options</h3>
+    <pre><code>git-pend [options] [path]</code></pre>
+
+    <h4>Options:</h4>
+    <ul>
+      <li><code>-h, --help</code> - Show help message</li>
+      <li><code>-a, --all</code> - Show all repositories, including clean ones</li>
+      <li><code>-d, --depth N</code> - Maximum directory depth to search (default: 3)</li>
+    </ul>
+
+    <h3>Examples</h3>
+    <pre><code># Scan current directory
+git-pend
+
+# Scan specific directory
+git-pend ~/projects
+
+# Search with greater depth
+git-pend -d 5 ~/code
+
+# Show all repositories including clean ones
+git-pend -a
+
+# Combine options
+git-pend -a -d 4 ~/workspace</code></pre>
+  </section>
+
+  <section id="features">
+    <h2>Features</h2>
+
+    <h3>Status Detection</h3>
+    <p>git-pend detects and displays:</p>
+    
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h4>Staged Changes</h4>
+        <span class="badge green">+N staged</span>
+        <p>Files ready to commit</p>
+      </div>
+      
+      <div class="feature-card">
+        <h4>Modified Files</h4>
+        <span class="badge yellow">~N modified</span>
+        <p>Tracked files with changes</p>
+      </div>
+      
+      <div class="feature-card">
+        <h4>Untracked Files</h4>
+        <span class="badge blue">?N untracked</span>
+        <p>New files not yet added</p>
+      </div>
+      
+      <div class="feature-card">
+        <h4>Merge Conflicts</h4>
+        <span class="badge red">!N conflicts</span>
+        <p>Unresolved conflicts</p>
+      </div>
+      
+      <div class="feature-card">
+        <h4>Unpushed Commits</h4>
+        <span class="badge blue">↑N unpushed</span>
+        <p>Commits not yet pushed</p>
+      </div>
+      
+      <div class="feature-card">
+        <h4>Stashed Changes</h4>
+        <span class="badge yellow">⚑N stashed</span>
+        <p>Changes saved in stash</p>
+      </div>
+    </div>
+
+    <h3>Color-Coded Output</h3>
+    <ul>
+      <li><strong style="color: var(--red);">Red dot (●)</strong> - Repository with pending changes</li>
+      <li><strong style="color: var(--green);">Green checkmark (✓)</strong> - Clean repository (with <code>--all</code> flag)</li>
+      <li><strong style="color: var(--green);">Green</strong> - Staged changes</li>
+      <li><strong style="color: var(--yellow);">Yellow</strong> - Modified files and stashes</li>
+      <li><strong style="color: var(--blue);">Blue</strong> - Unpushed commits</li>
+      <li><strong style="color: var(--red);">Red</strong> - Conflicts and errors</li>
+    </ul>
+
+    <h3>Sample Output</h3>
+    <pre><code>Scanning for git repositories in: /home/user/projects
+
+● my-website [main]
+    +2 staged | ~3 modified | ↑1 unpushed
+
+● api-server [develop]
+    ~5 modified | ?2 untracked | ⚑1 stashed
+
+Summary:
+  Total repositories scanned: 15
+  Repositories with changes: 2
+  Clean repositories: 13</code></pre>
+  </section>
+
+  <section id="use-cases">
+    <h2>Use Cases</h2>
+    <ul>
+      <li><strong>End of Day Check</strong> - Ensure you haven't forgotten to commit or push changes</li>
+      <li><strong>Project Overview</strong> - Get a quick status of all your projects</li>
+      <li><strong>Pre-Shutdown Routine</strong> - Check for pending work before closing your laptop</li>
+      <li><strong>CI/CD Validation</strong> - Use in scripts to verify clean working directories</li>
+      <li><strong>Team Lead Reviews</strong> - Scan team directories for abandoned work</li>
+    </ul>
+  </section>
+
+  <section id="exit-codes">
+    <h2>Exit Codes</h2>
+    <ul>
+      <li><code>0</code> - All repositories are clean (no pending changes)</li>
+      <li><code>1</code> - One or more repositories have pending changes</li>
+    </ul>
+    
+    <p>This makes git-pend useful in scripts and automation:</p>
+    <pre><code>if git-pend ~/projects; then
+    echo "All clean!"
+else
+    echo "You have pending changes!"
+fi</code></pre>
+  </section>
+
+  <section id="requirements">
+    <h2>Requirements</h2>
+    <ul>
+      <li><strong>Node.js</strong> >= 14.0.0</li>
+      <li><strong>Git</strong> installed and available in PATH</li>
+    </ul>
+
+    <h3>Supported Platforms</h3>
+    <ul>
+      <li>Linux</li>
+      <li>macOS</li>
+      <li>Windows</li>
+    </ul>
+  </section>
+
+  <section id="performance">
+    <h2>Performance</h2>
+    <p>git-pend is designed to be fast:</p>
+    <ul>
+      <li>Skips common non-repository directories (node_modules, vendor, etc.)</li>
+      <li>Configurable depth limit to avoid deep directory scans</li>
+      <li>Only shows repositories with changes by default</li>
+    </ul>
+  </section>
+
+  <section id="tips">
+    <h2>Tips</h2>
+    
+    <h3>1. Add to Shell Profile</h3>
+    <p>Run automatically by adding to your shell profile:</p>
+    <pre><code># Add to ~/.bashrc or ~/.zshrc
+alias checkgit='git-pend ~/projects'</code></pre>
+
+    <h3>2. Pre-Shutdown Script</h3>
+    <p>Use it before system shutdown:</p>
+    <pre><code>git-pend && shutdown -h now</code></pre>
+
+    <h3>3. Daily Reminders with Cron</h3>
+    <p>Create a cron job for daily reminders:</p>
+    <pre><code>0 17 * * * git-pend ~/projects && notify-send "Git Status Check Complete"</code></pre>
+  </section>
+</Layout>
