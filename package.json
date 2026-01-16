@@ -1,0 +1,32 @@
+{
+  "name": "git-pend",
+  "version": "1.0.1",
+  "description": "CLI tool to find git repositories with pending changes in subdirectories",
+  "main": "index.js",
+  "bin": {
+    "git-pend": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "node index.js --help"
+  },
+  "keywords": [
+    "git",
+    "cli",
+    "status",
+    "pending",
+    "changes",
+    "repository"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ]
+}
